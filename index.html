@@ -99,8 +99,10 @@
   h2.title { font-family: var(--display); font-weight: 900; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1; margin: 0 0 0.75rem; }
   .sub { color: var(--mist); max-width: 38rem; margin: 0 0 2.25rem; }
 
+  /* Embedded PDF */
+  .pdf-embed { display: block; width: 100%; height: 80vh; min-height: 480px; border: 1px solid var(--steel); border-radius: 14px; background: var(--deep); margin: 0 0 2.5rem; }
+
   /* Plans list */
-  <iframe src="Winter-Arc-Plan-2.pdf" width="100%" height="600" style="border:1px solid #2a4160; border-radius:12px;"></iframe>
   .plan { display: grid; grid-template-columns: 1fr auto; gap: 1rem 2rem; align-items: center; padding: 1.5rem 0; border-top: 1px solid var(--steel); }
   .plan:last-child { border-bottom: 1px solid var(--steel); }
   .plan h3 { font-family: var(--display); font-size: 1.9rem; font-weight: 800; margin: 0 0 0.25rem; }
@@ -117,6 +119,12 @@
   .result { margin-top: 1rem; padding: 0.9rem 1rem; border-left: 4px solid var(--ice); background: rgba(143, 208, 242, 0.08); min-height: 3.2rem; }
   .result strong { font-size: 1.25rem; }
   .note { color: var(--mist); font-size: 0.88rem; margin: 0.75rem 0 0; }
+  .tool.wide { grid-column: 1 / -1; }
+  .row.four { flex-wrap: wrap; }
+  .row.four > div { flex: 1 1 140px; }
+  .levels { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 0; }
+  .levels span { border: 1px solid var(--steel); color: var(--mist); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.88rem; }
+  .levels span.on { border-color: var(--ember); color: var(--frost); background: rgba(255, 138, 76, 0.14); }
 
   /* Diet + contact */
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
@@ -239,6 +247,24 @@
           <div class="result" id="rmOut" aria-live="polite">Enter the weight and reps of a hard set.</div>
           <p class="note">Uses the Epley formula. Most accurate for sets of 1 to 10 reps.</p>
         </div>
+
+        <div class="tool wide">
+          <h3>Strength level calculator</h3>
+          <div class="row four">
+            <div class="field"><label for="stB">Bench press (kg)</label><input id="stB" type="number" min="0" step="0.5" inputmode="decimal"></div>
+            <div class="field"><label for="stD">Deadlift (kg)</label><input id="stD" type="number" min="0" step="0.5" inputmode="decimal"></div>
+            <div class="field"><label for="stS">Squat (kg)</label><input id="stS" type="number" min="0" step="0.5" inputmode="decimal"></div>
+            <div class="field"><label for="stW">Body weight (kg)</label><input id="stW" type="number" min="0" step="0.1" inputmode="decimal"></div>
+          </div>
+          <div class="result" id="stOut" aria-live="polite">Enter all four numbers and your level shows up here.</div>
+          <div class="levels" id="stLevels">
+            <span data-level="beginner">Under 3: Beginner</span>
+            <span data-level="intermediate">3 to 5: Intermediate</span>
+            <span data-level="advanced">5 to 7: Advanced</span>
+            <span data-level="god">7 and above: God level</span>
+          </div>
+          <p class="note">Score = (bench + deadlift + squat) / body weight. Use your best recent lift for each one, in the same unit.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -262,7 +288,6 @@
     <div class="wrap">
       <h2 class="title">Contact</h2>
       <p class="sub">Want a plan made for your goal, or have a question? Reach out and say which plan you want and how many days you can train.</p>
-      <!-- Replace the address below with your own email or your Instagram / YouTube link. -->
       <a class="btn" href="mailto:adityapanwar582@gmail.com">Email me</a>
       <a class="btn ghost" href="https://instagram.com/imaadityapanwar" target="_blank" rel="noopener">Instagram</a>
       <a class="btn ghost" href="https://wa.me/917618316963" target="_blank" rel="noopener">WhatsApp</a>
@@ -337,6 +362,33 @@
     var oneRm = r === 1 ? w : w * (1 + r / 30);
     out.innerHTML = "<strong>" + (Math.round(oneRm * 2) / 2) + " kg</strong> &nbsp;estimated one rep max";
   });
+
+  /* Strength level: (bench + deadlift + squat) / body weight */
+  (function () {
+    var ids = ["stB", "stD", "stS", "stW"];
+    var out = document.getElementById("stOut");
+    var chips = document.querySelectorAll("#stLevels span");
+
+    function level(score) {
+      if (score >= 7) return { key: "god", name: "God level" };
+      if (score >= 5) return { key: "advanced", name: "Advanced" };
+      if (score >= 3) return { key: "intermediate", name: "Intermediate" };
+      return { key: "beginner", name: "Beginner" };
+    }
+
+    function calc() {
+      var v = ids.map(function (id) { return parseFloat(document.getElementById(id).value); });
+      var ready = v.every(function (n) { return n > 0; });
+      chips.forEach(function (c) { c.classList.remove("on"); });
+      if (!ready) { out.textContent = "Enter all four numbers and your level shows up here."; return; }
+      var score = (v[0] + v[1] + v[2]) / v[3];
+      var lv = level(score);
+      out.innerHTML = "<strong>" + score.toFixed(2) + "</strong> &nbsp;" + lv.name;
+      chips.forEach(function (c) { if (c.getAttribute("data-level") === lv.key) c.classList.add("on"); });
+    }
+
+    ids.forEach(function (id) { document.getElementById(id).addEventListener("input", calc); });
+  })();
 </script>
 </body>
 </html>
