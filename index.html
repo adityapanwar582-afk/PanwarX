@@ -23,6 +23,17 @@
   })();
 </script>
 
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M6Y47E47NT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag("js", new Date());
+  gtag("config", "G-M6Y47E47NT");
+  /* Sends a custom event. Safe to call even if analytics is blocked. */
+  function track(name, params) { try { gtag("event", name, params || {}); } catch (e) {} }
+</script>
+
 <style>
   :root {
     --night: #0e1a2b;
@@ -822,6 +833,7 @@
       seed = 0;
       current = buildPlan(readForm(), seed);
       render(current, true);
+      track("generate_plan", current.o);
     });
 
     out.addEventListener("click", function (e) {
@@ -830,8 +842,10 @@
         seed += 1;
         current = buildPlan(current.o, seed);
         render(current, false);
+        track("shuffle_plan", current.o);
         var b = document.getElementById("shuffleBtn"); if (b) b.focus({ preventScroll: true });
       } else if (t.id === "pdfBtn") {
+        track("download_pdf", current.o);
         makePDF(current);
       }
     });
@@ -839,6 +853,7 @@
     /* Goal buttons in the Plans section preselect the goal */
     document.querySelectorAll("[data-goal]").forEach(function (a) {
       a.addEventListener("click", function () {
+        track("select_plan_goal", { goal: a.getAttribute("data-goal") });
         document.getElementById("gGoal").value = a.getAttribute("data-goal");
         setTimeout(function () { document.getElementById("gGoal").focus({ preventScroll: true }); }, 400);
       });
@@ -947,6 +962,17 @@
       doc.save("PanwarX-Winter-Arc-" + plan.o.goal + "-" + plan.o.days + "day.pdf");
     }
   })();
+
+  /* Contact and Instagram clicks */
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+    var where = a.closest(".special") ? "winter_arc_special" : a.closest("#contact") ? "contact" : "other";
+    if (href.indexOf("instagram.com") > -1) track("instagram_click", { location: where });
+    else if (href.indexOf("wa.me") > -1) track("whatsapp_click", { location: where });
+    else if (href.indexOf("mailto:") === 0) track("email_click", { location: where });
+  });
 
   /* BMI */
   document.getElementById("bmiBtn").addEventListener("click", function () {
