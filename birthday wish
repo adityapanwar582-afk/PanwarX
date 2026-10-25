@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Ishmeet Kaur</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1b1b2f, #0f0f1a);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            max-height: 750px;
+            background: rgba(25, 25, 45, 0.7);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 24px;
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .section {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .section.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .avatar-box {
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.2);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #fbcfe8;
+        }
+
+        p {
+            font-size: 14px;
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Age counter */
+        .age-display {
+            font-size: 64px;
+            font-weight: 600;
+            color: #f472b6;
+            font-family: 'Playfair Display', serif;
+            margin: 20px 0;
+            text-shadow: 0 0 20px rgba(244, 114, 182, 0.4);
+        }
+
+        /* Compliments Cards */
+        .card-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            border-radius: 16px;
+            width: 100%;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.02);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f472b6;
+            margin-bottom: 8px;
+        }
+
+        /* Cake section */
+        .cake-container {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .candles {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: -10px;
+        }
+
+        .candle {
+            width: 10px;
+            height: 35px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .flame {
+            width: 12px;
+            height: 18px;
+            background: radial-gradient(#fef08a, #f97316);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -20px;
+            left: -1px;
+            animation: flicker 0.5s infinite alternate;
+            box-shadow: 0 0 10px #f59e0b;
+        }
+
+        .flame.extinguished {
+            display: none;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .cake-base {
+            width: 180px;
+            height: 90px;
+            background: linear-gradient(135deg, #f472b6, #db2777);
+            border-radius: 12px 12px 8px 8px;
+            box-shadow: 0 10px 25px rgba(219, 39, 119, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- SECTION 1: Welcome -->
+        <div class="section active" id="sec-1">
+            <div class="avatar-box">🐱</div>
+            <h1>Hello, Ishmeet Kaur</h1>
+            <p>Today is a special day! Let's unlock a small virtual world made exclusively for you.</p>
+            <button class="btn" onclick="nextSection(2)">Let's Begin ✨</button>
+        </div>
+
+        <!-- SECTION 2: Age Reveal -->
+        <div class="section" id="sec-2">
+            <h1>A Special Number</h1>
+            <p>Let's see how many wonderful years you’ve collected...</p>
+            <div class="age-display">19</div>
+            <button class="btn" onclick="nextSection(3)">Next ➔</button>
+        </div>
+
+        <!-- SECTION 3: Compliments / Qualities -->
+        <div class="section" id="sec-3">
+            <h1 id="comp-header">Things I Admire</h1>
+            <p id="comp-counter">1 of 5</p>
+            <div class="card-box">
+                <div class="card-title" id="comp-title">Brilliant Mind</div>
+                <p id="comp-text" style="margin-bottom:0;">Your ability to grasp concepts quickly and excel effortlessly commands real respect.</p>
+            </div>
+            <button class="btn" onclick="nextCompliment()">Next Compliment ➔</button>
+        </div>
+
+        <!-- SECTION 4: Music Choice Before Cake -->
+        <div class="section" id="sec-4">
+            <div class="avatar-box">🎶</div>
+            <h1>Set the Mood</h1>
+            <p>Would you like to play a soft piano instrumental birthday tune before making a wish?</p>
+            <button class="btn" style="margin-bottom: 12px; width: 100%;" onclick="playMusicAndProceed()">Play Music & Proceed</button>
+            <button class="btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); width: 100%;" onclick="nextSection(5)">Skip Music</button>
+        </div>
+
+        <!-- SECTION 5: Make a Wish (Cake & Candles) -->
+        <div class="section" id="sec-5">
+            <h1>Make a Wish!</h1>
+            <p>Tap each flame on the candles to blow them out.</p>
+            <div class="cake-container">
+                <div class="candles">
+                    <div class="candle" onclick="extinguish(this)"><div class="flame"></div></div>
+                    <div class="candle" onclick="extinguish(this)"><div class="flame"></div></div>
+                    <div class="candle" onclick="extinguish(this)"><div class="flame"></div></div>
+                    <div class="candle" onclick="extinguish(this)"><div class="flame"></div></div>
+                    <div class="candle" onclick="extinguish(this)"><div class="flame"></div></div>
+                </div>
+                <div class="cake-base"></div>
+            </div>
+            <button class="btn" id="cake-next-btn" style="display:none;" onclick="alert('Ready for final letter section next!')">Continue ➔</button>
+        </div>
+
+    </div>
+
+    <!-- Audio element using a smooth public domain piano melody or fallback -->
+    <audio id="bg-audio" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-tenderness.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let currentSec = 1;
+        function nextSection(sectionNum) {
+            document.getElementById(`sec-${currentSec}`).classList.remove('active');
+            currentSec = sectionNum;
+            document.getElementById(`sec-${currentSec}`).classList.add('active');
+        }
+
+        // Compliments data array
+        const compliments = [
+            { title: "Brilliant Mind", text: "Your ability to grasp concepts quickly and excel effortlessly commands real respect." },
+            { title: "Powerful Speaker", text: "When you speak, people genuinely listen. Your communication game is always top-notch." },
+            { title: "Good Learner & Problem Solver", text: "Adapting to new things and figuring out complex stuff with ease is truly inspiring." },
+            { title: "Effortless Beauty & Class", text: "You carry a natural elegance and grace that stands out anywhere you go." },
+            { title: "Infectious Smile & Vibe", text: "Having you around instantly brightens up the entire atmosphere with positive energy." }
+        ];
+        let compIndex = 0;
+
+        function nextCompliment() {
+            compIndex++;
+            if (compIndex < compliments.length) {
+                document.getElementById('comp-title').innerText = compliments[compIndex].title;
+                document.getElementById('comp-text').innerText = compliments[compIndex].text;
+                document.getElementById('comp-counter').innerText = `${compIndex + 1} of 5`;
+            } else {
+                nextSection(4); // Move to music choice section
+            }
+        }
+
+        function playMusicAndProceed() {
+            const audio = document.getElementById('bg-audio');
+            audio.play().catch(e => console.log("Audio play blocked by browser policy"));
+            nextSection(5);
+        }
+
+        let extinguishedCount = 0;
+        function extinguish(candleElement) {
+            const flame = candleElement.querySelector('.flame');
+            if (!flame.classList.contains('extinguished')) {
+                flame.classList.add('extinguished');
+                extinguishedCount++;
+                if (extinguishedCount === 5) {
+                    document.getElementById('cake-next-btn').style.display = 'block';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
